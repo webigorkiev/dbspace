@@ -7,7 +7,7 @@
   "module": "./index.mjs",
   "types": "./index.d.ts",
   "bin": {
-    "indexbackup": "index.js"
+    "dbspace": "index.js"
   },
   "scripts": {
     "build": "yarn docs && node scripts/build.js",
