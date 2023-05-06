@@ -46,9 +46,33 @@ conf.file = argv.file || argv.f || conf.file || "./dbspace.ts";
 const connections = conf.connections;
 
 // Основной цикл подключений
-for(const connection of connections) {
+(async () => {
+    for(const connection of connections) {
+        // Открываем подключение к базе
+        const conn = await mariadb.createConnection({
+            host: connection.host,
+            user:connection.user,
+            password: connection.password
+        });
 
-}
+        //
+        const rows = await conn.query(`
+            SHOW DATABASES;
+        `);
+        const dbs = rows
+            .map((row: Record<string, string>) => row.Database)
+            .filter((db: string) => db !== 'information_schema');
+
+        console.log(dbs);
+
+        // Закрываем подключение к базе
+        await conn.end();
+    }
+})();
+
+
+
+
 
 
 
