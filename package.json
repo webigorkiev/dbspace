@@ -13,7 +13,8 @@
     "build": "yarn docs && node scripts/build.js",
     "lint": "eslint src/** --ignore-path ./.eslintignore",
     "docs": "typedoc --includeVersion --excludePrivate --out docs src/index.ts",
-    "deploy": "node deploy.mjs"
+    "deploy": "node deploy.mjs",
+    "serve": "yarn build && node dist/index.mjs"
   },
   "keywords": [
     "interfaces for mariadb",
@@ -33,14 +34,13 @@
   "author": "webigorkiev",
   "license": "MIT",
   "dependencies": {
+    "chalk": "4",
     "margv": "^1.1.2",
-    "mariadb": "^3.0.1",
-    "chalk": "4"
+    "mariadb": "^3.0.1"
   },
   "devDependencies": {
     "@rollup/plugin-alias": "^3.1.9",
     "@types/archiver": "^5.3.1",
-    "@types/node": "^15.3.0",
     "@typescript-eslint/eslint-plugin": "^4.23.0",
     "@typescript-eslint/parser": "^4.29.1",
     "esbuild": "^0.14.51",
@@ -51,7 +51,7 @@
     "rollup-plugin-dts": "^3.0.2",
     "rollup-plugin-esbuild": "^4.5.0",
     "ts-loader": "^9.2.2",
-    "typedoc": "^0.22.13",
-    "typescript": "^4.3.2"
+    "typedoc": "^0.24.6",
+    "typescript": "^5.0.4"
   }
 }

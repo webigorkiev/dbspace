@@ -4,12 +4,14 @@
 
   "compilerOptions": {
     "lib": ["es2020"],
-    "module": "commonjs",
+    "module": "es2020",
+    "moduleResolution": "NodeNext",
     "target": "es2020",
     "strictPropertyInitialization": false,
     "strict": true,
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
+    "ignoreDeprecations": "5.0",
     "suppressImplicitAnyIndexErrors": true,
     "noImplicitThis": false,
     "declaration": true,

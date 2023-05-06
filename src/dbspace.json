@@ -1,3 +1,14 @@
 {
-  "connections": []
+  "connections": [
+    {
+      "type": "mariadb",
+      "host": "godisonline.net",
+      "port": 3306,
+      "user": "dbspace",
+      "password": "oM3cnuM8wXVdorwl",
+      "dbs": ["dbspace"],
+      "tables": []
+    }
+  ],
+  "file": "./dbspace.ts"
 }

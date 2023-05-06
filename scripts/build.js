@@ -16,7 +16,7 @@ const external = [
     ...Object.keys(pkg.dependencies || {}),
     ...Object.keys(pkg.peerDependencies || {}),
     ...Object.keys(pkg.devDependencies || {}),
-    ...["path", "fs", "fs/promises", "crypto", "dns", "stream", "querystring", "process", "perf_hooks"]
+    ...["path", "fs", "fs/promises", "crypto", "dns", "stream", "querystring", "process", "perf_hooks", "url"]
 ];
 
 (async() => {
@@ -28,6 +28,7 @@ const external = [
     await fs.copy("./package.json", path.resolve(root, "./package.json"));
     await fs.copy("./README.md", path.resolve(root, "./README.md"));
     await fs.copy("./docs", path.resolve(root, "./docs"));
+    await fs.copy("./src/dbspace.json", path.resolve(root, "./dbspace.json"));
     const pkg = await fs.readJson(path.resolve(root, "./package.json"));
     pkg.private = false;
     await fs.writeJson(path.resolve(root, "./package.json"), pkg, {
