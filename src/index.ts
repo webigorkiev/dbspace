@@ -41,7 +41,14 @@ try {
 
 conf.file = argv.file || argv.f || conf.file || "./dbspace.ts";
 
-console.log(conf);
+// console.log(conf);
+
+const connections = conf.connections;
+
+// Основной цикл подключений
+for(const connection of connections) {
+
+}
 
 
 
