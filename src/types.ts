@@ -1,6 +1,6 @@
 export namespace dbspace {
     interface Connection {
-        type: string,
+        type: "mysql"|"mariadb"|"manticore",
         host: string,
         port: number,
         user: string,

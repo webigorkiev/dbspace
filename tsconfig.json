@@ -3,10 +3,10 @@
   "display": "Node 18",
 
   "compilerOptions": {
-    "lib": ["es2020"],
-    "module": "es2020",
+    "lib": ["ESNext"],
+    "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "target": "es2020",
+    "target": "ESNext",
     "strictPropertyInitialization": false,
     "strict": true,
     "allowSyntheticDefaultImports": true,

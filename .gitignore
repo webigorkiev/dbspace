@@ -1,7 +1,5 @@
 node_modules
-connect.json
 .DS_Store
-*.local
 .idea
 dist
 dbspace.ts

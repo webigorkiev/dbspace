@@ -10,7 +10,6 @@ const chalk = require("chalk");
 const pkg = require("../package.json");
 const root = path.resolve("./dist");
 
-// eslint-disable-next-line no-console
 const log = console.log;
 const external = [
     ...Object.keys(pkg.dependencies || {}),
@@ -50,10 +49,6 @@ const external = [
     await checkFileSize("./dist/index.js");
 })();
 
-/**
- * Build bundle by rollup
- * @returns {Promise<void>}
- */
 const buildPlugin = async(input, output, format = "cjs") => {
     const bundle = await rollup.rollup({
         input,
