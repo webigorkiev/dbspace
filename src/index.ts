@@ -1,7 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as process from "process";
-import { fileURLToPath } from "url";
 
 import margv from "margv"; // Чтение из командной строки
 import mariadb from "mariadb"; // Работа с базой данных
@@ -27,8 +26,7 @@ const configFile = argv.config || argv.c || defaultConfigFile;
 let conf: dbspace.Config = {
     connections: []
 };
-const baseDir = path.dirname(fileURLToPath(path.resolve()));
-const filePath = path.resolve(baseDir, configFile);
+const filePath = path.resolve(path.resolve(), configFile);
 
 try {
     conf = JSON.parse(fs.readFileSync(filePath, {encoding: "utf-8"}));
