@@ -1,13 +1,14 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as process from "process";
-
 import margv from "margv"; // Чтение из командной строки
-import mariadb from "mariadb"; // Работа с базой данных
 import chalk from "chalk"; // Подсветка в консоли
-import {convertType} from "@/typesAdapter";
+import {createConnection} from "@/util/createConnection"; // Типы
+import {convertType} from "@/util/convertType";
 
-import type {dbspace} from "@/types"; // Типы
+import type {dbspace} from "@/types";
+
+
 
 // Данные из командной строки
 const defaultConfigFile = './dbspace.json';
@@ -17,7 +18,7 @@ const defaultOutputFile = "./dbspace.ts";
 const argv = margv();
 const configFile = argv.config || argv.c || defaultConfigFile;
 
-// TODO Чтение файла конфигураци если он есть
+// TODO Чтение файла конфигурация если он есть
 
 // Получаем конфигурацию и проводим нормализацию
 // Читаем выбранные базы данных и создаем обект
@@ -35,10 +36,9 @@ try {
     process.exit(0);
 }
 conf.file = argv.file || argv.f || conf.file || defaultOutputFile;
+const connections = conf.connections || [];
 
-// console.log(conf);
 
-const connections = conf.connections;
 
 // Основной цикл подключений
 (async () => {
@@ -48,20 +48,12 @@ const connections = conf.connections;
     }
 
     for(const connection of connections) {
-        // Открываем подключение к базе
-        const conn = await mariadb.createConnection({
-            host: connection.host,
-            user:connection.user,
-            password: connection.password
-        });
-
-        // Получить список баз данных
-        // В цикле - выбираем поочередно каждую базу данных
-        // получаем масив существующих таблиц
+        const conn = await createConnection(connection);
         const rows = await conn.query(`SHOW DATABASES;`);
         const dbs = rows
             .map((row: Record<string, string>) => row.Database)
-            .filter((db: string) => db !== 'information_schema');
+            .filter((db: string) => db !== 'information_schema'); // performance_schema // sys
+
 
         // Список баз данных
         for(const db of dbs) {

@@ -4,3 +4,4 @@ node_modules
 dist
 dbspace.ts
 test.mjs
+dbspace.json

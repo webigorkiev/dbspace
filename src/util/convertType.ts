@@ -1,4 +1,4 @@
-export const typesAdapters = {
+const typesAdapters = {
 
     // Если строка начинается с key
     "tinyint(1)": "boolean",
