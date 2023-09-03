@@ -1,9 +1,11 @@
 const typesAdapters = {
 
-    // Если строка начинается с key
-    "tinyint(1)": "boolean",
-    "boolean":"boolean",
+    // Numeric
     "int": "number",
+    "tinyint(1)": "boolean",
+
+    // Если строка начинается с key
+    "boolean":"boolean",
     "varchar": "string",
     "text":"string",
     "datetime": "string|Date",
