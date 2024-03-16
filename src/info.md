@@ -35,3 +35,18 @@
 * INT3
 * INT4
 * INT8
+
+
+# manticore
+
+* bigint
+* text
+* uint
+* string
+* tokencount
+* timestamp
+* bool
+* float
+* mva
+* json
+* 

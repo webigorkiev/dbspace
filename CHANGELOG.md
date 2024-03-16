@@ -1,3 +1,7 @@
+# [0.0.4]
+
+* Add manticore support
+
 # [0.0.3]
 
 * Fix config file path

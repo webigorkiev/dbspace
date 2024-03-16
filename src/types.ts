@@ -1,6 +1,7 @@
 export namespace dbspace {
+    export type dbType = "mysql"|"mariadb"|"manticore";
     interface Connection {
-        type?: "mysql"|"mariadb"|"manticore", // default mariadb
+        type?: dbType, // default mariadb
         host?: string, // deafult localhost
         port?: number, // 3306
         user?: string,
@@ -11,6 +12,7 @@ export namespace dbspace {
 
     export interface Config {
         connections?: Connection[],
-        file?: string
+        file?: string,
+        adapter?: Record<string, Record<string, string>>// Можно указать дополнительные правила преобразования типов
     }
 }
