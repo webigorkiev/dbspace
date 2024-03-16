@@ -1,3 +1,7 @@
+# [0.0.5]
+
+* Fix no adapter error
+
 # [0.0.4]
 
 * Add manticore support

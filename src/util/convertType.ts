@@ -48,7 +48,7 @@ export const convertType = (input: string, type: dbspace.dbType, conf: Required<
     const adapter = currentKeys.includes(input) ? typesAdapters[type] : typesAdapters.mariadb;
     // Сначала ищем в пользовательском определении типов
     const customAdapter = conf?.adapter?.[type] || {};
-    for(const key in conf.adapter[type]) {
+    for(const key in customAdapter) {
         if(input.indexOf(key) === 0) {
             return adapter[key];
         }
