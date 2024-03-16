@@ -2,6 +2,7 @@ import * as fs from "fs";
 import {createConnection} from "@/util/createConnection"; // Типы
 import {convertType} from "@/util/convertType";
 import {createConfig} from "@/util/createConfig";
+import chalk from "chalk";
 const conf = createConfig();
 const connections = conf.connections || [];
 (async () => {
@@ -16,12 +17,18 @@ const connections = conf.connections || [];
         const rows = await conn.query(`SHOW DATABASES;`);
         const allowedDbs = connection?.dbs || []
         const dbType = connection?.type || "mariadb";
-        const dbs = rows
-            .map((row: Record<string, string>) => row.Database)
-            .filter((db: string) => !["information_schema", "mysql", "sys"].includes(db) && !allowedDbs.includes(db)); // filter system tables
+        let dbs = rows
+            .map((row: Record<string, string>) => row.Database || row.Databases)
+            .filter((dbName: string) => !!dbName);
+        if(!allowedDbs.length) {
+            dbs = dbs.filter((db: string) => !["information_schema", "mysql", "sys"].includes(db)) // filter system tables
+        } else {
+            dbs = dbs.filter((db: string) => allowedDbs.includes(db))
+        }
         for(const db of dbs) {
+            console.log(chalk.blue(`Start parse ${db}`));
             writeOutput(`export namespace ${db} {`, 0);
-            await conn.query(`USE ${db};`);
+            await conn.query(`USE ${db}`);
             const rows = await conn.query(`SHOW TABLES;`);
             const tables = rows.map((row: Record<string, any>) => Object.values(row)[0]);
             for(const table of tables) {
@@ -34,6 +41,7 @@ const connections = conf.connections || [];
             }
             writeOutput(`}`, 0);
             writeOutput("\n");
+            console.log(chalk.green(`Done!`));
         }
         await conn.end();
     }

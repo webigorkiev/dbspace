@@ -1,5 +1,9 @@
 # [0.0.5]
 
+* dbs list
+
+# [0.0.5]
+
 * Fix no adapter error
 
 # [0.0.4]
