@@ -8,8 +8,8 @@ export const selectTablesCommentsAdapter = async (conn: Connection, db: string) 
             SELECT table_name as id,
                 table_comment as label
             FROM INFORMATION_SCHEMA.TABLES
-            WHERE table_schema = :db;
-        `, {db});
+            WHERE table_schema = ${conn.escape(db)};
+        `);
         comments.forEach(({id, label}) => {
             adapter[id] = label;
         })

@@ -1,3 +1,7 @@
+# [0.0.9]
+
+* Fix sql error for table`s comments
+
 # [0.0.8]
 
 * If possible, add comments to the table
