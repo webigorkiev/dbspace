@@ -4,6 +4,7 @@ import {convertType} from "@/util/convertType";
 import {createConfig} from "@/util/createConfig";
 import chalk from "chalk";
 import {selectTablesCommentsAdapter} from "@/util/selectTablesCommentsAdapter";
+import {selectTablesColumnsCommentsAdapter} from "@/util/selectTablesColumnsCommentsAdapter";
 const conf = createConfig();
 const connections = conf.connections || [];
 (async () => {
@@ -35,11 +36,15 @@ const connections = conf.connections || [];
             const tablesCommentsAdapter = await selectTablesCommentsAdapter(conn, db);
             for(const table of tables) {
                 const comment = tablesCommentsAdapter[table];
-                comment && writeOutput(`// ${comment} {`, 1);
+                comment && writeOutput(`// ${comment}`, 1);
                 writeOutput(`export interface ${table} {`, 1);
                 const columns = await conn.query(`DESCRIBE ${table};`);
+                const columnsCommentsAdapter = await selectTablesColumnsCommentsAdapter(conn, db, table);
                 for(const column of columns) {
-                    writeOutput(`${column.Field}:${convertType(column.Type, dbType, conf)};`, 2);
+                    const comment = columnsCommentsAdapter[table] ? ` // ${columnsCommentsAdapter[table]}`:"";
+                    const isNull = (column.Null || "").toLowerCase() === 'YES';
+                    const defaultValueComment = column.Default === null ? "" : ` // default: ${column.Default}`;
+                    writeOutput(`${column.Field}:${convertType(column.Type, dbType, conf)}${isNull ? "|null":""};${defaultValueComment}${comment}`, 2);
                 }
                 writeOutput(`}`, 1);
             }

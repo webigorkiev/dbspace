@@ -1,3 +1,8 @@
+# [0.0.10]
+
+* Add default value
+* Add column`s comments
+
 # [0.0.9]
 
 * Fix sql error for table`s comments
