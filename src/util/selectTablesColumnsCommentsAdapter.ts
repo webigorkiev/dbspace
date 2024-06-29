@@ -15,7 +15,7 @@ export const selectTablesColumnsCommentsAdapter = async (conn: Connection, db: s
             adapter[id] = label;
         })
     } catch (e: any) {
-        console.log(chalk.red(`Error select tables columns comments or not supported`));
+        console.log(chalk.red(`${table}: Error select tables columns comments or not supported`));
     }
 
     return adapter;

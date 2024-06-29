@@ -41,9 +41,9 @@ const connections = conf.connections || [];
                 const columns = await conn.query(`DESCRIBE ${table};`);
                 const columnsCommentsAdapter = await selectTablesColumnsCommentsAdapter(conn, db, table);
                 for(const column of columns) {
-                    const comment = columnsCommentsAdapter[column] ? ` // ${columnsCommentsAdapter[column]}`:"";
+                    const comment = columnsCommentsAdapter[column.Field] ? ` // ${columnsCommentsAdapter[column.Field]}`:"";
                     const isNull = (column.Null || "").toLowerCase() === 'YES';
-                    const defaultValueComment = column.Default === null ? "" : ` // default: ${column.Default}`;
+                    const defaultValueComment = column.Default === null || typeof column.Default === "undefined" ? "" : ` // default: ${column.Default}`;
                     writeOutput(`${column.Field}:${convertType(column.Type, dbType, conf)}${isNull ? "|null":""};${defaultValueComment}${comment}`, 2);
                 }
                 writeOutput(`}`, 1);
