@@ -3,6 +3,7 @@ import {createConnection} from "@/util/createConnection"; // Типы
 import {convertType} from "@/util/convertType";
 import {createConfig} from "@/util/createConfig";
 import chalk from "chalk";
+import {selectTablesCommentsAdapter} from "@/util/selectTablesCommentsAdapter";
 const conf = createConfig();
 const connections = conf.connections || [];
 (async () => {
@@ -31,7 +32,10 @@ const connections = conf.connections || [];
             await conn.query(`USE ${db}`);
             const rows = await conn.query(`SHOW TABLES;`);
             const tables = rows.map((row: Record<string, any>) => Object.values(row)[0]);
+            const tablesCommentsAdapter = await selectTablesCommentsAdapter(conn, db);
             for(const table of tables) {
+                const comment = tablesCommentsAdapter[table];
+                comment && writeOutput(`// ${comment} {`, 1);
                 writeOutput(`export interface ${table} {`, 1);
                 const columns = await conn.query(`DESCRIBE ${table};`);
                 for(const column of columns) {

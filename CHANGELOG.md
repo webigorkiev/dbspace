@@ -1,3 +1,7 @@
+# [0.0.8]
+
+* If possible, add comments to the table
+
 # [0.0.5]
 
 * dbs list
