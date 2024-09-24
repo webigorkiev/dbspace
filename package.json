@@ -1,6 +1,6 @@
 {
   "name": "dbspace",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "private": true,
   "description": "Creating typescript interfaces for mariadb and manticore search",
   "main": "./index.js",
