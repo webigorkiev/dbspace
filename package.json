@@ -1,6 +1,6 @@
 {
   "name": "dbspace",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "private": true,
   "description": "Creating typescript interfaces for mariadb and manticore search",
   "main": "./index.js",
@@ -10,6 +10,7 @@
     "dbspace": "index.js"
   },
   "scripts": {
+    "tunnel": "ssh -L 3307:127.0.0.1:3306 tehnoskarb@godisonline.net",
     "build": "yarn docs && node scripts/build.js",
     "docs": "typedoc --includeVersion --excludePrivate --out docs src/index.ts",
     "deploy": "node deploy.mjs",

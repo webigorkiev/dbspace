@@ -30,6 +30,7 @@ const external = [
     // await fs.copy("./src/dbspace.json", path.resolve(root, "./dbspace.json"));
     const pkg = await fs.readJson(path.resolve(root, "./package.json"));
     pkg.private = false;
+    delete(pkg.scripts.tunnel); // Удаляем создание тонеля
     await fs.writeJson(path.resolve(root, "./package.json"), pkg, {
         spaces: 2
     });

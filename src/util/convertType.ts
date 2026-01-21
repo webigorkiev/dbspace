@@ -1,5 +1,7 @@
 import {dbspace} from "@/types";
 
+// TODO "enum('test1','test2')
+// Нужно добавить возможность regexp
 const typesAdapters: Record<dbspace.dbType, Record<string, string>> = {
     mariadb: {
 
@@ -42,7 +44,14 @@ const typesAdapters: Record<dbspace.dbType, Record<string, string>> = {
         "json": "any"
     }
 };
-
+const regexpAdapter = [
+    {
+        regexp: /enum\((.*?)\)/i,
+        handler: (input: string) => (input.replace(/enum\((.*?)\)/i, "$1"))
+            .replace(/,/g, '|')
+            .replace(/'/g, '"') + '|string'
+    }
+];
 export const convertType = (input: string, type: dbspace.dbType, conf: Required<dbspace.Config>) => {
     const currentKeys = Object.keys(typesAdapters[type]);
     const adapter = currentKeys.includes(input) ? typesAdapters[type] : typesAdapters.mariadb;
@@ -53,9 +62,15 @@ export const convertType = (input: string, type: dbspace.dbType, conf: Required<
             return adapter[key];
         }
     }
+    // Далее адаптер по умолчанию
     for(const key in adapter) {
         if(input.indexOf(key) === 0) {
             return adapter[key];
+        }
+    }
+    for(const {regexp, handler} of regexpAdapter) {
+        if(regexp.test(input)) {
+            return handler(input);
         }
     }
     return "string";
